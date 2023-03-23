@@ -1,0 +1,15 @@
+{
+  "name": "saf2",
+  "version": "1.0.0",
+  "description": "Automação do sistema SAF2 com Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress open"
+  },
+  "author": "Eduardo Pacheco",
+  "license": "MIT",
+  "devDependencies": {
+    "@cypress/xpath": "^2.0.3",
+    "cypress": "^12.8.1"
+  }
+}
