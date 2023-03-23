@@ -10,6 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "@cypress/xpath": "^2.0.3",
+    "@shelex/cypress-allure-plugin": "^2.37.0",
+    "allure-commandline": "^2.21.0",
     "cypress": "^12.8.1"
   }
 }

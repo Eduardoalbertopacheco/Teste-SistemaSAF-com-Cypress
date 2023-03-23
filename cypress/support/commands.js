@@ -27,7 +27,7 @@
 // require('@cypress/xpath');
 
 
-Cypress.Commands.add('login', (username, password) => {
+Cypress.Commands.add('loginSucesso', (username, password) => {
     cy.origin('https://sso.staging.acesso.gov.br/',
         { args: { username, password } }, ({ username, password }) => {
 
@@ -41,8 +41,8 @@ Cypress.Commands.add('login', (username, password) => {
 
             cy.get('button[id="submit-button"]').click()
 
-            cy.get('div[class="header-title"]')
-                .should('be.visible')
+            // cy.get('div[class="header-title"]')
+            //     .should('be.visible')
 
         })
 })

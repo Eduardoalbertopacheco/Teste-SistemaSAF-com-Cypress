@@ -29,10 +29,10 @@ describe('LOGIN', function () {
         it('Então deve realizar login com sucesso', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
-            cy.login('04492557199', 'Teste@123!@#')
+            cy.loginSucesso('04492557199', 'Teste@123!@#')
 
-            // cy.get('div[class="header-title"]')
-            //     .should('be.visible')
+            cy.get('div[class="header-title"]')
+                .should('be.visible')
     
         })
     })
