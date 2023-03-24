@@ -41,9 +41,6 @@ Cypress.Commands.add('loginSucesso', (username, password) => {
 
             cy.get('button[id="submit-button"]').click()
 
-            // cy.get('div[class="header-title"]')
-            //     .should('be.visible')
-
         })
 })
 
