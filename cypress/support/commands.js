@@ -42,6 +42,12 @@ Cypress.Commands.add('loginSucesso', (username, password) => {
             cy.get('button[id="submit-button"]').click()
 
         })
+    cy.intercept('GET', '/api/login/govbr/callback?code=*').as('govbrCallback');
+    cy.wait('@govbrCallback').then(({ response }) => {
+        expect(response.statusCode).to.eq(200);
+        localStorage.setItem('usuario', JSON.stringify(response.body.usuario));
+        cy.setCookie('token', response.body.token);
+        });
 })
 
 Cypress.Commands.add('logininvalido', (cpfinvalido) => {
@@ -54,8 +60,7 @@ Cypress.Commands.add('logininvalido', (cpfinvalido) => {
             cy.get('button[class="button-continuar"]').click()
 
             cy.contains('.erro > p', 'CPF informado inválido.')
-            .should('be.visible')
-
+                .should('be.visible')
         })
 })
 
@@ -74,7 +79,6 @@ Cypress.Commands.add('senhaInvalida', (username, password) => {
             cy.get('button[id="submit-button"]').click()
 
             cy.contains('.erro > p', 'Usuário e/ou senha inválidos.')
-            .should('be.visible')
-
+                .should('be.visible')
         })
 })

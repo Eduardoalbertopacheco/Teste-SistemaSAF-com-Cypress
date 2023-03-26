@@ -3,7 +3,6 @@ import loginPage from '../support/pages/login'
 
 describe('HU01_REALIZAR_LOGIN', function () {
     context('Critério 03 CPF inválido', function () {
-
         it('Autenticação sem sucesso', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
@@ -24,10 +23,8 @@ describe('HU01_REALIZAR_LOGIN', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
             cy.loginSucesso('04492557199', 'Teste@123!@#')
-
             cy.get('div[class="header-title"]')
                 .should('be.visible')
-
         })
     })
 
@@ -36,10 +33,8 @@ describe('HU01_REALIZAR_LOGIN', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
             cy.loginSucesso('04492557199', 'Teste@123!@#')
-
-            cy.get('button[aria-label="Abrir Menu de usuário"]').click()
-            cy.get('a[class="br-button sign-in secondary"]').click()
-
+            loginPage.btnMenuUsuario()
+            loginPage.BtnSair()
         })
     })
 
@@ -49,31 +44,47 @@ describe('HU01_REALIZAR_LOGIN', function () {
             loginPage.btnEntrarComGov()
             cy.loginSucesso('02659415129', 'N#va2958062')
 
-            cy.get('button[aria-label="Menu"]').click()
-            cy.get('#main-navigation > div > div > nav > div > a').click()
-            cy.contains('span[class="content"]', 'Solicitar Perfil')
-                .should('be.visible')
-
+            cy.visit('/solicitar-perfil')
+            // loginPage.homemenuHamburguer()
+            // loginPage.BtnPerfil()
+            loginPage.containsBtnSolicitarPerfil()
         })
     })
 
-    context.only('Critério 06', function () {
+    context('Critério 06', function () {
         it('Solicitar Perfil', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
-            cy.loginSucesso('02659415129', 'N#va2958062')
+            cy.loginSucesso('061.896.020-10', 'Eduardo@1702')
+            cy.visit('/solicitar-perfil')
 
-            cy.get('button[aria-label="Menu"]').click()
-            cy.get('#main-navigation > div > div > nav > div > a').click()
-            cy.contains('span[class="content"]', 'Solicitar Perfil')
-                .click()
+            cy.xpath('//label[@for="acesso_total"][contains(.,"Acesso total")]')
+            .click()
+            cy.get('.primary').click()
 
-            // cy.xpath('//div[1]/div[1]/div[1]/div[3]/div[1]/a[1]/span[1]')
-            //     .click()
+            cy.contains('#main-content > div.br-message.success > div.content', 'A sua solicitação para o perfil: Acesso total foi enviada com sucesso.', {timeout: 8000})
+            .should('be.visible')
 
+            // cy.get('body')
+            // cy.wait(8000)
+
+            // loginPage.homeMenuHamburguer()
+            // loginPage.BtnPerfil()
+            // loginPage.BtnSolicitarPerfil()
         })
-
     })
 
+    context('Critério 02', function () {
+        it('Guardar os dados do usuário logado', function () {
+            loginPage.go()
+            loginPage.btnEntrarComGov()
+            cy.loginSucesso('04492557199', 'Teste@123!@#')
+            loginPage.homeMenuHamburguer()
+            loginPage.BtnPerfil()
+            cy.xpath('//span[@class="content"][contains(.,"Usuários Não Vinculados")]').click()
+            cy.xpath('(//a[@title="Visualizar"])[3]').click()
+
+        })
+    })
 })
 
