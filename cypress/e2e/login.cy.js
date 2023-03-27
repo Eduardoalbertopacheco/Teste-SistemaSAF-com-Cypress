@@ -2,6 +2,29 @@
 import loginPage from '../support/pages/login'
 
 describe('HU01_REALIZAR_LOGIN', function () {
+
+    context('Critério 01', function () {
+        it('Autenticação com sucesso', function () {
+            loginPage.go()
+            loginPage.btnEntrarComGov()
+            cy.loginSucesso('04492557199', 'Teste@123!@#')
+            cy.get('div[class="header-title"]')
+                .should('be.visible')
+        })
+    })
+
+    context.only('Critério 02', function () {
+        it('Guardar os dados do usuário logado', function () {
+            loginPage.go()
+            loginPage.btnEntrarComGov()
+            cy.loginSucesso('04492557199', 'Teste@123!@#')
+            loginPage.homeMenuHamburguer()
+            loginPage.BtnPerfil()
+            loginPage.btnUserNotVinc()
+            loginPage.btnViewUserNotVinc()
+        })
+    })
+
     context('Critério 03 CPF inválido', function () {
         it('Autenticação sem sucesso', function () {
             loginPage.go()
@@ -18,35 +41,14 @@ describe('HU01_REALIZAR_LOGIN', function () {
         })
     })
 
-    context('Critério 01', function () {
-        it('Autenticação com sucesso', function () {
-            loginPage.go()
-            loginPage.btnEntrarComGov()
-            cy.loginSucesso('04492557199', 'Teste@123!@#')
-            cy.get('div[class="header-title"]')
-                .should('be.visible')
-        })
-    })
-
-    context('Critério 08', function () {
-        it('Sair do Sistema', function () {
-            loginPage.go()
-            loginPage.btnEntrarComGov()
-            cy.loginSucesso('04492557199', 'Teste@123!@#')
-            loginPage.btnMenuUsuario()
-            loginPage.BtnSair()
-        })
-    })
-
     context('Critério 05', function () {
         it('Usuário sem Perfil e sem Empresa', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
-            cy.loginSucesso('02659415129', 'N#va2958062')
-
-            cy.visit('/solicitar-perfil')
-            // loginPage.homemenuHamburguer()
-            // loginPage.BtnPerfil()
+            cy.loginSucesso('06189602010', 'Eduardo@1702')
+            loginPage.homeMenuHamburguer()
+            loginPage.BtnPerfil()
+            cy.visit('/pagina-inicial-solicitar-perfil')
             loginPage.containsBtnSolicitarPerfil()
         })
     })
@@ -57,33 +59,18 @@ describe('HU01_REALIZAR_LOGIN', function () {
             loginPage.btnEntrarComGov()
             cy.loginSucesso('061.896.020-10', 'Eduardo@1702')
             cy.visit('/solicitar-perfil')
-
-            cy.xpath('//label[@for="acesso_total"][contains(.,"Acesso total")]')
-            .click()
-            cy.get('.primary').click()
-
-            cy.contains('#main-content > div.br-message.success > div.content', 'A sua solicitação para o perfil: Acesso total foi enviada com sucesso.', {timeout: 8000})
-            .should('be.visible')
-
-            // cy.get('body')
-            // cy.wait(8000)
-
-            // loginPage.homeMenuHamburguer()
-            // loginPage.BtnPerfil()
-            // loginPage.BtnSolicitarPerfil()
+            loginPage.solAcessoTotal()
+            loginPage.expectedText()
         })
     })
 
-    context('Critério 02', function () {
-        it('Guardar os dados do usuário logado', function () {
+    context('Critério 08', function () {
+        it('Sair do Sistema', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
             cy.loginSucesso('04492557199', 'Teste@123!@#')
-            loginPage.homeMenuHamburguer()
-            loginPage.BtnPerfil()
-            cy.xpath('//span[@class="content"][contains(.,"Usuários Não Vinculados")]').click()
-            cy.xpath('(//a[@title="Visualizar"])[3]').click()
-
+            loginPage.btnMenuUsuario()
+            loginPage.BtnSair()
         })
     })
 })
