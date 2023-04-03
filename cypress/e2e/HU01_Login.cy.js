@@ -13,7 +13,7 @@ describe('HU01_REALIZAR_LOGIN', function () {
         })
     })
 
-    context.only('Critério 02', function () {
+    context('Critério 02', function () {
         it('Guardar os dados do usuário logado', function () {
             loginPage.go()
             loginPage.btnEntrarComGov()
